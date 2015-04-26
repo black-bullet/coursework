@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\GroupCollege */
+/* @var $model app\models\Student */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Групи', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Студенти', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="group-college-view">
+<div class="student-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Оновоити', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Оновити', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Видалити', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -29,10 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             //'id',
-            ['label'=>'Група',
+            ['label'=>'Прізвище',
+            'value'=>$model->surname],
+            ['label'=>"Ім'я",
             'value'=>$model->name],
-            ['label'=>'Відділення',
-            'value'=>$model->section0->name],
+            ['label'=>'Група',
+            'value'=>$model->group0->name],
+           
         ],
     ]) ?>
 

@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\GroupCollegeSearch */
+/* @var $model app\models\MarkTableSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="group-college-search">
+<div class="mark-table-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,9 +17,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name')->label('Група') ?>
+    <?=
+     //$form->field($model, 'student') 
+        $form->field($model,'student0.surname')
+     ?>
 
-    <?= $form->field($model, 'section')->lable('Відділення') ?>
+    <?= $form->field($model, 'subject') ?>
+
+    <?= $form->field($model, 'mark') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

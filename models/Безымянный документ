@@ -1,0 +1,4 @@
+ <?= $form->field($model, 'subject')->dropDownList(ArrayHelper::map(Subject::find()
+    		 ->all(),'id','name','course0.group0.name'),
+			 ['prompt'=>'Оберіть предмет']
+	);	?>

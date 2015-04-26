@@ -44,8 +44,9 @@ class GroupCollege extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getSection()
+    public function getSection0()
     {
         return $this->hasOne(Section::className(),['id'=>'section']);
     }
+
 }

@@ -52,8 +52,13 @@ class Student extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMarkTables()
+   // public function getMarkTables()
+    //{
+      //  return $this->hasMany(MarkTable::className(), ['student' => 'id']);
+    //}
+
+    public function getGroup0()
     {
-        return $this->hasMany(MarkTable::className(), ['student' => 'id']);
+        return $this->hasOne(GroupCollege::className(),['id'=>'group_college'])->orderBy('name');
     }
 }

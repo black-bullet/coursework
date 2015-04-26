@@ -41,7 +41,7 @@ class GroupCollegeSearch extends GroupCollege
      */
     public function search($params)
     {
-        $query = GroupCollege::find();
+        $query = GroupCollege::find()->orderBy('name');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,6 +52,7 @@ class GroupCollegeSearch extends GroupCollege
         if (!$this->validate()) {
             // uncomment the following line if you do not want to any records when validation fails
             // $query->where('0=1');
+            //$dataProvider->query->where('0=1');
             return $dataProvider;
         }
 

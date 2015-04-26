@@ -10,19 +10,22 @@ class StudentController extends \yii\web\Controller
 {
     public function actionIndex($group)
     {
-	    $students=Student::find()
-	        	->where(['group_college'=>$group])
-	        	->orderBy('surname','name')
-	        	->all();
+    	if($group!=Null)
+    	{
+		    $students=Student::find()
+		        	->where(['group_college'=>$group])
+		        	->orderBy('surname','name')
+		        	->all();
 
-	    $group=GroupCollege::find()
-	        	->orderBy('name')
-	        	->all();
-	       	
-	    return $this->render('index',[
-	       	'students'=>$students,
-	       	'group'=>$group]);
-	 
+		    $group=GroupCollege::find()
+		        	->orderBy('name')
+		        	->all();
+		       	
+		    return $this->render('index',[
+		       	'students'=>$students,
+		       	'group'=>$group]);
+		}    
+	
     }
 
 }

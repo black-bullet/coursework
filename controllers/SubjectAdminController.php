@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\GroupCollege;
-use app\models\GroupCollegeSearch;
+use app\models\Subject;
+use app\models\SubjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * GroupCollegeAdminController implements the CRUD actions for GroupCollege model.
+ * SubjectAdminController implements the CRUD actions for Subject model.
  */
-class GroupCollegeAdminController extends Controller
+class SubjectAdminController extends Controller
 {
     public function behaviors()
     {
@@ -27,22 +27,22 @@ class GroupCollegeAdminController extends Controller
     }
 
     /**
-     * Lists all GroupCollege models.
+     * Lists all Subject models.
      * @return mixed
      */
-    public function actionIndex($section=Null)
+    public function actionIndex()
     {
-        $searchModel = new GroupCollegeSearch();
+        $searchModel = new SubjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-       
+
         return $this->render('index', [
-               'searchModel' => $searchModel,
-               'dataProvider' => $dataProvider,
-       ]);
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
-     * Displays a single GroupCollege model.
+     * Displays a single Subject model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +54,13 @@ class GroupCollegeAdminController extends Controller
     }
 
     /**
-     * Creates a new GroupCollege model.
+     * Creates a new Subject model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new GroupCollege();
+        $model = new Subject();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,7 +72,7 @@ class GroupCollegeAdminController extends Controller
     }
 
     /**
-     * Updates an existing GroupCollege model.
+     * Updates an existing Subject model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +91,7 @@ class GroupCollegeAdminController extends Controller
     }
 
     /**
-     * Deletes an existing GroupCollege model.
+     * Deletes an existing Subject model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +104,15 @@ class GroupCollegeAdminController extends Controller
     }
 
     /**
-     * Finds the GroupCollege model based on its primary key value.
+     * Finds the Subject model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return GroupCollege the loaded model
+     * @return Subject the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = GroupCollege::findOne($id)) !== null) {
+        if (($model = Subject::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

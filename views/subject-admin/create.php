@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\GroupCollege */
+/* @var $model app\models\Subject */
 
-$this->title = 'Стовирити групу';
-$this->params['breadcrumbs'][] = ['label' => 'Групи', 'url' => ['index']];
+$this->title = 'Створити предмет';
+$this->params['breadcrumbs'][] = ['label' => 'Предмет', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="group-college-create">
+<div class="subject-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

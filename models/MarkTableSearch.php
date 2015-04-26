@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Section;
+use app\models\MarkTable;
 
 /**
- * SectionSearch represents the model behind the search form about `app\models\Section`.
+ * MarkTableSearch represents the model behind the search form about `app\models\MarkTable`.
  */
-class SectionSearch extends Section
+class MarkTableSearch extends MarkTable
 {
     /**
      * @inheritdoc
@@ -18,8 +18,7 @@ class SectionSearch extends Section
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'student', 'subject', 'mark'], 'integer'],
         ];
     }
 
@@ -41,7 +40,7 @@ class SectionSearch extends Section
      */
     public function search($params)
     {
-        $query = Section::find()->orderBy('name');
+        $query = MarkTable::find()->orderBy('student');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,9 +56,10 @@ class SectionSearch extends Section
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'student' => $this->student,
+            'subject' => $this->subject,
+            'mark' => $this->mark,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }
