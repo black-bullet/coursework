@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Section */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Sections', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Відділення', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="section-view">
@@ -15,21 +15,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Оновлення', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Видалення', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Ви впевнені, що хочете видалити цей запис?',
                 'method' => 'post',
             ],
         ]) ?>
     </p>
 
     <?= DetailView::widget([
-        'model' => $model,
+        'model' => $model,       
         'attributes' => [
-            'id',
-            'name',
+            //'id',
+            ['label'=>'Відділення',
+            'value'=>$model->name]
         ],
     ]) ?>
 

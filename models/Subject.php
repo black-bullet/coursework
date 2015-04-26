@@ -61,7 +61,7 @@ class Subject extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCourseNumber()
+    public function getCourse0()
     {
         return $this->hasOne(SubjectCourse::className(), ['id' => 'course_number']);
     }

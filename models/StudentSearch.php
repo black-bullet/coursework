@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Section;
+use app\models\Student;
 
 /**
- * SectionSearch represents the model behind the search form about `app\models\Section`.
+ * StudentSearch represents the model behind the search form about `app\models\Student`.
  */
-class SectionSearch extends Section
+class StudentSearch extends Student
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SectionSearch extends Section
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'group_college'], 'integer'],
+            [['name', 'surname'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SectionSearch extends Section
      */
     public function search($params)
     {
-        $query = Section::find()->orderBy('name');
+        $query = Student::find()->OrderBy('surname');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,9 +57,11 @@ class SectionSearch extends Section
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'group_college' => $this->group_college,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'surname', $this->surname]);
 
         return $dataProvider;
     }

@@ -58,8 +58,9 @@ class SubjectCourse extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupSubject()
+    public function getGroup0()
     {
         return $this->hasOne(SubjectGroup::className(), ['id' => 'group_subject']);
     }
+
 }

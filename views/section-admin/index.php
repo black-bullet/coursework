@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SectionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Sections';
+$this->title = 'Список відділеннь';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="section-index">
@@ -16,20 +17,29 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Section', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Стоврити нове відділення', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'name',
-
+            ['label'=>'Відділення',
+            'value'=>'name'],
+            [
+                'label'=>'',
+                'format'=>'raw',
+                'value' => function($data){
+                    $groups=
+                    $url = "http://semester/?r=group-college-admin/index";
+                    return Html::a('Перегляд груп', $url, ['title' => 'Натисніть для перегляду груп відділення']);
+                }    
+            ],
+            //'id',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
+ 
 </div>
+
