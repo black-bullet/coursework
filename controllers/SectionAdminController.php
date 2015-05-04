@@ -19,7 +19,22 @@ class SectionAdminController extends Controller
 {
     public function behaviors()
     {
-        return [
+         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['adminka'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+
+       /* return [
             'access'=>[
                 'class'=>AccessControl::className(),
                 'only'=>['index'],
@@ -33,7 +48,7 @@ class SectionAdminController extends Controller
                                 return Users::isUserAdmin(Yii::$app->user->identity->username);
                             }
                     ],
-                   /* [
+                    [
                         'actions'=>['index'],
                         'allow'=>true,
                         'roles'=>['@'],
@@ -41,7 +56,7 @@ class SectionAdminController extends Controller
                         function ($rule, $action) {
                             return Users::isGroupAdmin(Yii::$app->user->identity->username);
                         }
-                    ],*/
+                    ],
                 ],
             ],
             'verbs' => [
@@ -51,7 +66,8 @@ class SectionAdminController extends Controller
                 ],
             ],
         ];
-    }
+        */
+    
 
 
     /**
@@ -60,6 +76,8 @@ class SectionAdminController extends Controller
      */
     public function actionIndex($id=Null)
     {
+        if(\Yii::$app->user->can('createPost'))
+        {
             $searchModel = new SectionSearch();
             if($id==Null)
             {
@@ -73,6 +91,10 @@ class SectionAdminController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
+        }else
+        {
+            throw new ForbiddenHttpException('У вас недостаточно прав для выполнения указанного действия');
+        }
     }
 
 
