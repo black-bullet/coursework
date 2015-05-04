@@ -3,47 +3,20 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use app\models\Section;
-use app\models\SectionSearch;
+use app\models\Users;
+use app\models\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\ForbiddenHttpException;
-use yii\data\ActiveDataProvider;
-use app\models\Users;
+
 /**
- * SectionAdminController implements the CRUD actions for Section model.
+ * UsersController implements the CRUD actions for Users model.
  */
-class SectionAdminController extends Controller
+class UsersController extends Controller
 {
     public function behaviors()
     {
         return [
-            'access'=>[
-                'class'=>AccessControl::className(),
-                'only'=>['index'],
-                'rules'=>[
-                    [
-                        'actions'=>['index'],
-                        'allow'=>true,
-                        'roles'=>['@'],
-                        'matchCallback' => 
-                            function ($rule, $action) {
-                                return Users::isUserAdmin(Yii::$app->user->identity->username);
-                            }
-                    ],
-                   /* [
-                        'actions'=>['index'],
-                        'allow'=>true,
-                        'roles'=>['@'],
-                        'matchCallback' => 
-                        function ($rule, $action) {
-                            return Users::isGroupAdmin(Yii::$app->user->identity->username);
-                        }
-                    ],*/
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -53,32 +26,23 @@ class SectionAdminController extends Controller
         ];
     }
 
-
     /**
-     * Lists all Section models.
+     * Lists all Users models.
      * @return mixed
      */
-    public function actionIndex($id=Null)
+    public function actionIndex()
     {
-            $searchModel = new SectionSearch();
-            if($id==Null)
-            {
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            }else
-            {
-                $dataProvider= new ActiveDataProvider([
-                    'query'=>Section::find()->where(['id'=>$id])]);
-            }
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
+        $searchModel = new UsersSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
-
-
     /**
-     * Displays a single Section model.
+     * Displays a single Users model.
      * @param integer $id
      * @return mixed
      */
@@ -90,13 +54,13 @@ class SectionAdminController extends Controller
     }
 
     /**
-     * Creates a new Section model.
+     * Creates a new Users model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Section();
+        $model = new Users();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -106,10 +70,9 @@ class SectionAdminController extends Controller
             ]);
         }
     }
-    
 
     /**
-     * Updates an existing Section model.
+     * Updates an existing Users model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -128,7 +91,7 @@ class SectionAdminController extends Controller
     }
 
     /**
-     * Deletes an existing Section model.
+     * Deletes an existing Users model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -141,15 +104,15 @@ class SectionAdminController extends Controller
     }
 
     /**
-     * Finds the Section model based on its primary key value.
+     * Finds the Users model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Section the loaded model
+     * @return Users the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Section::findOne($id)) !== null) {
+        if (($model = Users::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

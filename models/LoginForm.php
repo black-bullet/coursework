@@ -24,7 +24,7 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['username', 'password'], 'required','message' => 'Не заповнене поле'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -45,7 +45,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Невірний логін чи пароль');
             }
         }
     }
@@ -76,4 +76,35 @@ class LoginForm extends Model
 
         return $this->_user;
     }
+
+    public function LoginForm()
+    {
+        if($this->validate() && User::isUserAdmin($this->username) && User::isGroupAdmin($this->username))
+        {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        }else
+        {
+            return false;
+        }
+    }
+
+    public function loginAdmin()
+    {
+        if ($this->validate() && Users::isUserAdmin($this->username)) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        } else {
+            return false;
+        }
+    }
+
+     public function loginUser()
+    {
+        if ($this->validate() && Users::isGroupAdmin($this->username)) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        } else {
+            return false;
+        }
+    }
+
+
 }

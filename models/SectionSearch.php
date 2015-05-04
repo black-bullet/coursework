@@ -41,7 +41,10 @@ class SectionSearch extends Section
      */
     public function search($params)
     {
-        $query = Section::find()->orderBy('name');
+        $query = Section::find()
+        //->where(['id'=>1])
+        ->orderBy('name');
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

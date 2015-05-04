@@ -21,13 +21,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'label'=>'Назва групи',
                 'value'=>'name'
             ],
+            //'name',
             ['label'=>'Відділення','value'=>'section0.name'],
             [
                 'label'=>'',
