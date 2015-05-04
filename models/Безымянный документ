@@ -1,4 +1,30 @@
- <?= $form->field($model, 'subject')->dropDownList(ArrayHelper::map(Subject::find()
-    		 ->all(),'id','name','course0.group0.name'),
-			 ['prompt'=>'Оберіть предмет']
-	);	?>
+ public function rules()
+    {
+        return [
+            [['password'], 'string','max'=>20],
+            [['name'], 'string', 'max' => 50],
+            ['role','in','range'=>[self::ROLE_USER,self::ROLE_ADMIN]],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'password' => 'Password',
+        ];
+    }
+
+    public static function isUserAdmin($username)
+    {
+        if(static::findOne(['username'=>$username,'role'=>self::ROLE_ADMIN]))
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }

@@ -3,12 +3,15 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Section;
 use app\models\SectionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\ForbiddenHttpException;
+use yii\data\ActiveDataProvider;
+use app\models\Users;
 /**
  * SectionAdminController implements the CRUD actions for Section model.
  */
@@ -16,7 +19,46 @@ class SectionAdminController extends Controller
 {
     public function behaviors()
     {
-        return [
+         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['adminka'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+
+       /* return [
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'only'=>['index'],
+                'rules'=>[
+                    [
+                        'actions'=>['index'],
+                        'allow'=>true,
+                        'roles'=>['@'],
+                        'matchCallback' => 
+                            function ($rule, $action) {
+                                return Users::isUserAdmin(Yii::$app->user->identity->username);
+                            }
+                    ],
+                    [
+                        'actions'=>['index'],
+                        'allow'=>true,
+                        'roles'=>['@'],
+                        'matchCallback' => 
+                        function ($rule, $action) {
+                            return Users::isGroupAdmin(Yii::$app->user->identity->username);
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -24,22 +66,38 @@ class SectionAdminController extends Controller
                 ],
             ],
         ];
-    }
+        */
+    
+
 
     /**
      * Lists all Section models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id=Null)
     {
-        $searchModel = new SectionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if(\Yii::$app->user->can('createPost'))
+        {
+            $searchModel = new SectionSearch();
+            if($id==Null)
+            {
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            }else
+            {
+                $dataProvider= new ActiveDataProvider([
+                    'query'=>Section::find()->where(['id'=>$id])]);
+            }
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else
+        {
+            throw new ForbiddenHttpException('У вас недостаточно прав для выполнения указанного действия');
+        }
     }
+
+
 
     /**
      * Displays a single Section model.
@@ -70,6 +128,7 @@ class SectionAdminController extends Controller
             ]);
         }
     }
+    
 
     /**
      * Updates an existing Section model.

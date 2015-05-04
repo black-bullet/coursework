@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Users;
+use app\models\Section;
 
 class SiteController extends Controller
 {
@@ -16,12 +18,20 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','about'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions'=>['about'],
+                        'allow'=>true,
+                        'roles'=>['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Users::isUserAdmin(Yii::$app->user->identity->username);
+                        }
                     ],
                 ],
             ],
@@ -59,7 +69,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->loginAdmin()) {
             return $this->goBack();
         } else {
             return $this->render('login', [
@@ -92,5 +102,12 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionSectionAdmin()
+    {
+        return $this->render('section',[
+            'model'=>$model,
+        ]);
     }
 }

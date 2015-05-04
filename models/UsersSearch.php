@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\GroupCollege;
+use app\models\Users;
 
 /**
- * GroupCollegeSearch represents the model behind the search form about `app\models\GroupCollege`.
+ * UsersSearch represents the model behind the search form about `app\models\Users`.
  */
-class GroupCollegeSearch extends GroupCollege
+class UsersSearch extends Users
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class GroupCollegeSearch extends GroupCollege
     public function rules()
     {
         return [
-            [['id', 'section'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'role'], 'integer'],
+            [['name', 'password'], 'safe'],
         ];
     }
 
@@ -39,11 +39,9 @@ class GroupCollegeSearch extends GroupCollege
      *
      * @return ActiveDataProvider
      */
-    
-
     public function search($params)
     {
-        $query = GroupCollege::find()->orderBy('name');
+        $query = Users::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,16 +52,16 @@ class GroupCollegeSearch extends GroupCollege
         if (!$this->validate()) {
             // uncomment the following line if you do not want to any records when validation fails
             // $query->where('0=1');
-            //$dataProvider->query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'section' => $this->section,
+            'role' => $this->role,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'password', $this->password]);
 
         return $dataProvider;
     }

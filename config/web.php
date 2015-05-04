@@ -37,6 +37,10 @@ $config = [
                 ],
             ],
         ],
+        'authManager'=>[
+            'class'=>'yii]rbac\DbManager',
+            'cache'=>'cache'
+        ],
         'db' => require(__DIR__ . '/db.php'),
     ],
     'params' => $params,

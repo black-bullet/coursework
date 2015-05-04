@@ -44,6 +44,6 @@ class Section extends \yii\db\ActiveRecord
 
     public function getGroups()
     {
-        //return $this->hasMany(GroupCollege::className(),['section'=>'id']);
+        return $this->hasMany(GroupCollege::className(),['section'=>'id']);
     }
 }

@@ -10,22 +10,31 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'gii'],
     'controllerNamespace' => 'app\commands',
-    'modules' => [
-        'gii' => 'yii\gii\Module',
-    ],
-    'components' => [
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
+        'modules' => [
+            'admin' => [
+                'class' => 'mdm\admin\Module',
+            ],
+            'debug' => 'yii\debug\Module',
+            'gii' => 'yii\gii\Module',
         ],
-        'log' => [
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+        'components' => [
+            'authManager' => [
+                'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+                'cache' => 'cache,' 
+            ],
+            'cache' => [
+                'class' => 'yii\caching\FileCache',
+            ],
+            'log' => [
+                'targets' => [
+                    [
+                        'class' => 'yii\log\FileTarget',
+                        'levels' => ['error', 'warning'],
+                    ],
                 ],
             ],
+            'db' => $db,
         ],
-        'db' => $db,
-    ],
+    //'db' => $db,
     'params' => $params,
 ];
